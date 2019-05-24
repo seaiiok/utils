@@ -4,13 +4,13 @@ import (
 	"testing"
 	"utils/db/databases"
 
-	_ "github.com/mattn/go-sqlite3"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func TestNewDB(t *testing.T) {
-	DriverName := "sqlite3"
-	DataSourceName := "D:\\sqlite3\\DB\\mygit.db"
-	db,err := databases.NewDB(DriverName, DataSourceName)
+	DriverName := "mysql"
+	DataSourceName := "root:1949@/test"
+	db, err := databases.NewDB(DriverName, DataSourceName)
 	if err != nil {
 		t.Log(err)
 	}
@@ -30,28 +30,29 @@ func TestNewDB(t *testing.T) {
 // 	t.Log(err)
 // }
 
-// func TestInsert(t *testing.T) {
-// 	var d *db.DB
-// 	d = new(db.DB)
-// 	d.DriverName = "sqlite3"
-// 	d.DataSourceName = "D:\\sqlite3\\DB\\mygit.db"
-// 	err := d.Init()
-// 	t.Log(err)
+func TestInsert(t *testing.T) {
+	DriverName := "mysql"
+	DataSourceName := "root:1949@/test"
+	db, err := databases.NewDB(DriverName, DataSourceName)
+	if err != nil {
+		t.Log(err)
+	}
+	t.Log(db)
 
-// 	d.SQLstring = `insert into mygit(ID,NAME) values(?,?);`
-// 	res := make([][]string, 0, 0)
-// 	re := make([]string, 2)
-// 	re[0] = "1"
-// 	re[1] = "Tome"
-// 	res = append(res, re)
-// 	re1 := make([]string, 2)
-// 	re1[0] = "2"
-// 	re1[1] = "Jime"
-// 	res = append(res, re1)
-// 	t.Log(res)
-// 	err = d.Insert(res)
-// 	t.Log(err)
-// }
+	SQLstring := `insert into T1 (id,name) values(?,?);`
+	res := make([][]interface{}, 0, 0)
+	re := make([]interface{}, 2)
+	re[0] = "1"
+	re[1] = "Tome"
+	res = append(res, re)
+	re1 := make([]interface{}, 2)
+	re1[0] = "2"
+	re1[1] = "Jime"
+	res = append(res, re1)
+	t.Log(res)
+	err = db.Insert2(SQLstring, res)
+	t.Log(err)
+}
 
 // func TestUpdate(t *testing.T) {
 // 	var d *db.DB
