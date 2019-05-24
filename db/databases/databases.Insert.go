@@ -26,7 +26,7 @@ func (db *DB) Insert_Old(SQLstring string, res [][]string) (err error) {
 
 
 //Insert insert more rows
-func (db *DB) Insert(SQLstring string, res [][]interface{}) (err error) {
+func (db *DB) Insert_Old1(SQLstring string, res [][]interface{}) (err error) {
 	conn, err := db.db.Begin()
 
 	for c := 0; c < len(res); c++ {
@@ -40,6 +40,26 @@ func (db *DB) Insert(SQLstring string, res [][]interface{}) (err error) {
 		}
 		defer stmt.Close()
 		_, err = stmt.Exec(re...)
+		if err != nil {
+			conn.Rollback()
+		}
+		defer stmt.Close()
+	}
+	conn.Commit()
+	return
+}
+
+//Insert insert more rows
+func (db *DB) Insert(SQLstring string, res [][]interface{}) (err error) {
+	conn, err := db.db.Begin()
+
+	for c := 0; c < len(res); c++ {
+		stmt, err := db.db.Prepare(SQLstring)
+		if err != nil {
+			conn.Rollback()
+		}
+		defer stmt.Close()
+		_, err = stmt.Exec(res[c]...)
 		if err != nil {
 			conn.Rollback()
 		}
