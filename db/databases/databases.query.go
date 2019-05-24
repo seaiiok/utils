@@ -61,6 +61,9 @@ func (db *DB) Query(SQLstring string) (res [][]interface{}, err error) {
 	}
 	for rows.Next() {
 		arr := make([]interface{}, len(cols))
+		for i := 0; i < len(cols); i++ {
+			arr[i] = new(interface{})
+		}
 		err = rows.Scan(arr...)
 		if err != nil {
 			return
