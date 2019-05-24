@@ -1,11 +1,10 @@
 package db
 
-//DB interface
-type DB interface {
-	Init() error
-	Create(string) error
-	Query() [][]string
-	Insert([]string) error
-	Update([]string) error
-	Delete() error
+import (
+	"utils/db/databases"
+)
+
+//NewDB new database driver
+func NewDB(DriverName, DataSourceName string) (*databases.DB, error) {
+	return databases.NewDB(DriverName, DataSourceName)
 }
