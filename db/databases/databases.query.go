@@ -6,7 +6,7 @@ import (
 )
 
 // Query  query more
-func (db *DB) Query(SQLstring string) (res [][]string, err error) {
+func (db *DB) QueryStr(SQLstring string) (res [][]string, err error) {
 	res = make([][]string, 0)
 	stmt, err := db.db.Prepare(SQLstring)
 	if err != nil {
@@ -38,6 +38,35 @@ func (db *DB) Query(SQLstring string) (res [][]string, err error) {
 			re[i] = arrtem.String
 		}
 		res = append(res, re)
+	}
+	defer rows.Close()
+	return
+}
+
+// Query  query more
+func (db *DB) Query(SQLstring string) (res [][]interface{}, err error) {
+	res = make([][]interface{}, 0)
+	stmt, err := db.db.Prepare(SQLstring)
+	if err != nil {
+		return
+	}
+	defer stmt.Close()
+	rows, err := stmt.Query()
+	if err != nil || rows == nil {
+		return
+	}
+	cols, err := rows.Columns()
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		arr := make([]interface{}, len(cols))
+		err = rows.Scan(arr...)
+		if err != nil {
+			return
+		}
+
+		res = append(res, arr)
 	}
 	defer rows.Close()
 	return
