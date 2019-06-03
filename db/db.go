@@ -1,7 +1,7 @@
 package db
 
 import (
-	"utils/db/databases"
+	"github.com/seaiiok/utils/db/databases"
 )
 
 //NewDB new database driver
