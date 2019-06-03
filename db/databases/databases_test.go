@@ -2,9 +2,9 @@ package databases_test
 
 import (
 	"testing"
-	"utils/db/databases"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/seaiiok/utils/db/databases"
 )
 
 func TestNewDB(t *testing.T) {
@@ -50,7 +50,7 @@ func TestInsert(t *testing.T) {
 	re1[1] = "Jime"
 	res = append(res, re1)
 	t.Log(res)
-	err = db.Insert2(SQLstring, res)
+	err = db.Insert(SQLstring, res)
 	t.Log(err)
 }
 
