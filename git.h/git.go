@@ -10,8 +10,20 @@ import (
 
 func main() {
 	ExecCommand("chcp", "65001")
-	fmtx.Println(fmtx.Ok, "push code...")
 
+	for {
+		fmtx.Println(fmtx.Ok, "cmd help input push...")
+		input := bufio.NewScanner(os.Stdin)
+		input.Scan()
+		if input.Text() == "push" {
+			fmtx.Println(fmtx.Ok, "push code...")
+			GitPush()
+		}
+
+	}
+}
+
+func GitPush() {
 	output := ExecCommand("git", "add", "-A")
 	fmtx.Println(fmtx.Info, output)
 
