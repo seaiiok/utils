@@ -7,7 +7,7 @@ import (
 
 type Conf struct {
 	Config map[string]interface{}
-	cache  *util.Cache
+	Cache  *util.Cache
 }
 
 func NewCache() *Conf {
@@ -15,14 +15,6 @@ func NewCache() *Conf {
 	defaultExpiration, _ := time.ParseDuration("30s")
 	conf := new(Conf)
 	conf.Config = make(map[string]interface{}, 0)
-	conf.cache = util.NewCache(defaultExpiration, gcInterval)
+	conf.Cache = util.NewCache(defaultExpiration, gcInterval)
 	return conf
-}
-
-func (c *Conf) SaveToFile(path string) error {
-	return c.cache.SaveToFile(path)
-}
-
-func (c *Conf) LoadFromFile(path string) error {
-	return c.cache.LoadFromFile(path)
 }
