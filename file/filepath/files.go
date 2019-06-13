@@ -34,7 +34,7 @@ func (files *Files) GetAllFile(pathsuffix ...string) (err error) {
 		if f.IsDir() {
 			return nil
 		}
-
+		
 		fileSuffix := path.Ext(filespath)
 
 		if len(suffix) == 0 {
