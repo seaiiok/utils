@@ -37,15 +37,12 @@ func (item Item) IsExpired() bool {
 //循环gc
 func (c *Cache) gcLoop() {
 	ticker := time.NewTicker(c.gcInterval) //初始化一个定时器
-	fmt.Println("gcInterval-expired")
 	for {
 		select {
 		case <-ticker.C:
-			c.DeleteExpired()
-			fmt.Println("delete-expired")
+			c.DeleteExpired()		
 		case <-c.stopGc:
 			ticker.Stop()
-			fmt.Println("Stop-expired")
 			return
 		}
 	}
@@ -242,7 +239,6 @@ func (c *Cache) Flush() {
 
 //停止gc
 func (c *Cache) StopGc() {
-	fmt.Println("Stop-expired-Cache")
 	c.stopGc <- true
 }
 
