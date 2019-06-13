@@ -12,16 +12,28 @@ func main() {
 	ExecCommand("chcp", "65001")
 	fmtx.Println(fmtx.Ok, "push code...")
 
-	output := ExecCommand("git","add","-A")
+	output := ExecCommand("git", "add", "-A")
 	fmtx.Println(fmtx.Info, output)
 
 	fmtx.Println(fmtx.Ok, "please input comments...")
 	input := bufio.NewScanner(os.Stdin)
 	input.Scan()
-	output = ExecCommand("git","commit","-m","githlep")
+
+	if input.Text() == "" {
+		output = ExecCommand("git", "commit", "-m", "update...")
+	} else {
+		output = ExecCommand("git", "commit", "-m", input.Text())
+	}
+
 	fmtx.Println(fmtx.Info, output)
 
-	output = ExecCommand("git","push","origin","master")
+	output = ExecCommand("git", "push", "origin", "master")
+	fmtx.Println(fmtx.Info, output)
+
+	output = ExecCommand("gopm", "get", "-u", "github.com/seaiiok/utils")
+	fmtx.Println(fmtx.Info, output)
+
+	output = ExecCommand("gopm", "get", "-g", "github.com/seaiiok/utils")
 	fmtx.Println(fmtx.Info, output)
 }
 
