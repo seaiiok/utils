@@ -3,6 +3,7 @@ package config
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -114,7 +115,7 @@ func (config *Config) watch() {
 	// Catch SIGHUP to automatically reload cache
 	sighup := make(chan os.Signal, 1)
 	signal.Notify(sighup, syscall.SIGHUP)
-
+	fmt.Printf("%d", os.Getpid())
 	for {
 		<-sighup
 		l.Println("Caught SIGHUP, reloading config...")
