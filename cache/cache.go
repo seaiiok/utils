@@ -12,7 +12,7 @@ type Conf struct {
 
 func NewCache() *Conf {
 	gcInterval, _ := time.ParseDuration("1s")
-	defaultExpiration, _ := time.ParseDuration("30s")
+	defaultExpiration, _ := time.ParseDuration("3s")
 	conf := new(Conf)
 	conf.Config = make(map[string]interface{}, 0)
 	conf.Cache = util.NewCache(defaultExpiration, gcInterval)
