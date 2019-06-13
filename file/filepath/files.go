@@ -37,13 +37,17 @@ func (files *Files) GetAllFile(pathsuffix ...string) (err error) {
 
 		fileSuffix := path.Ext(filespath)
 
-		for _, v := range suffix {
-			if fileSuffix == v {
-				files.ListFiles = append(files.ListFiles, filespath)
+		if len(suffix) == 0 {
+			files.ListFiles = append(files.ListFiles, filespath)
+		} else {
+			for _, v := range suffix {
+				if fileSuffix == v {
+					files.ListFiles = append(files.ListFiles, filespath)
+				}
 			}
 		}
 
-		return nil
+		return err
 	})
 
 	return
@@ -54,7 +58,7 @@ func (files *Files) FilefilterisChineseChar(filter string) {
 	files.ListFiles = make([]string, 0)
 
 	for _, p := range fp {
-		if !isChineseChar(p,filter) {
+		if !isChineseChar(p, filter) {
 			files.ListFiles = append(files.ListFiles, p)
 		}
 		// for _, r := range p {
@@ -65,11 +69,11 @@ func (files *Files) FilefilterisChineseChar(filter string) {
 	}
 }
 
-func isChineseChar(str string,filter string) bool {
+func isChineseChar(str string, filter string) bool {
 	for _, r := range str {
-	if unicode.Is(unicode.Scripts[filter], r) {
-	return true
-	}
+		if unicode.Is(unicode.Scripts[filter], r) {
+			return true
+		}
 	}
 	return false
-	}
+}
