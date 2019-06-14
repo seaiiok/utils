@@ -58,9 +58,8 @@ func (fi *files) GetFilterSuffix(suffix ...string) *files {
 
 func (fi *files) GetFilterReg(r string) *files {
 	i := 0
-
 	for k, v := range fi.FilesList {
-		reg := regexp.MustCompile("KNR")
+		reg := regexp.MustCompile(r)
 		if reg.MatchString(v) {
 			fi.FilesList[i] = fi.FilesList[k]
 			i++
