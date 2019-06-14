@@ -1,12 +1,8 @@
 package files
 
-import (
-	"utils/file/filepath"
-)
+import "utils/file/util"
 
 //NewGetFiles get files
-func NewGetFiles() *files.Files {
-	return &files.Files{
-		ListFiles: make([]string, 0),
-	}
+func New() *util.File {
+	return &util.File{}
 }
