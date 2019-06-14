@@ -35,34 +35,30 @@ func (fi *File) GetAllFiles(pathstring string) *files {
 }
 
 func (fi *files) GetFilterSuffix(suffix ...string) *files {
-	f := new(files)
-	f.FilesList = make([]string, 0)
-
 	if len(suffix) == 0 {
 		return fi
 	} else {
-		for _, fv := range fi.FilesList {
+		for fk, fv := range fi.FilesList {
 			fileSuffix := path.Ext(fv)
 
 			for _, sv := range suffix {
 				if strings.EqualFold(fileSuffix, sv) {
-					f.FilesList = append(f.FilesList, fv)
+					fi.FilesList=append(fi.FilesList[:fk],fi.FilesList[fk:]...)
 				}
 			}
 		}
 	}
-	return f
+	return fi
 }
 
 func (fi *files) GetFilterZH() *files {
-	f := new(files)
-	f.FilesList = make([]string, 0)
-	for _, v := range fi.FilesList {
-		if !isChineseChar(v) {
-			f.FilesList = append(f.FilesList, v)
+	for k, v := range fi.FilesList {
+		if isChineseChar(v) {
+			fi.FilesList=append(fi.FilesList[:k],fi.FilesList[k:]...)
+			
 		}
 	}
-	return f
+	return fi
 }
 
 func isChineseChar(str string) bool {
