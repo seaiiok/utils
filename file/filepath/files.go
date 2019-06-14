@@ -12,20 +12,8 @@ type Files struct {
 }
 
 //GetAllFile get files
-func (files *Files) GetAllFile(pathsuffix ...string) (err error) {
+func (files *Files) GetAllFile(filespath string, suffix ...string) (err error) {
 	files.ListFiles = make([]string, 0)
-	var (
-		filespath string
-		suffix    []string = make([]string, 0)
-	)
-
-	for k, v := range pathsuffix {
-		if k == 0 {
-			filespath = v
-		} else {
-			suffix = append(suffix, v)
-		}
-	}
 
 	err = filepath.Walk(filespath, func(filespath string, f os.FileInfo, err error) error {
 		if f == nil {
@@ -34,7 +22,7 @@ func (files *Files) GetAllFile(pathsuffix ...string) (err error) {
 		if f.IsDir() {
 			return nil
 		}
-		
+
 		fileSuffix := path.Ext(filespath)
 
 		if len(suffix) == 0 {
@@ -61,11 +49,6 @@ func (files *Files) FilefilterisChineseChar(filter string) {
 		if !isChineseChar(p, filter) {
 			files.ListFiles = append(files.ListFiles, p)
 		}
-		// for _, r := range p {
-		// 	if unicode.Is(unicode.Scripts[filter], r) {
-		// 		files.ListFiles = append(files.ListFiles, p)
-		// 	}
-		// }
 	}
 }
 
