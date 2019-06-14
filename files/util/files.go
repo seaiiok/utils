@@ -35,6 +35,7 @@ func (fi *File) GetAllFiles(pathstring string) *files {
 }
 
 func (fi *files) GetFilterSuffix(suffix ...string) *files {
+	i := 0
 	if len(suffix) == 0 {
 		return fi
 	} else {
@@ -43,21 +44,27 @@ func (fi *files) GetFilterSuffix(suffix ...string) *files {
 
 			for _, sv := range suffix {
 				if strings.EqualFold(fileSuffix, sv) {
-					fi.FilesList=append(fi.FilesList[:fk],fi.FilesList[fk+1:]...)
+					fi.FilesList[i] = fi.FilesList[fk]
+					i++
+					continue
 				}
 			}
 		}
 	}
+	fi.FilesList = fi.FilesList[:i]
 	return fi
 }
 
 func (fi *files) GetFilterZH() *files {
+	i:=0
 	for k, v := range fi.FilesList {
-		if isChineseChar(v) {
-			fi.FilesList=append(fi.FilesList[:k],fi.FilesList[k+1:]...)
-			
+		if !isChineseChar(v) {
+			fi.FilesList[i] = fi.FilesList[k]
+			i++
+			continue
 		}
 	}
+	fi.FilesList = fi.FilesList[:i]
 	return fi
 }
 
