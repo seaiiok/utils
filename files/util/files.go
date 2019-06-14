@@ -43,7 +43,7 @@ func (fi *files) GetFilterSuffix(suffix ...string) *files {
 
 			for _, sv := range suffix {
 				if strings.EqualFold(fileSuffix, sv) {
-					fi.FilesList=append(fi.FilesList[:fk],fi.FilesList[fk:]...)
+					fi.FilesList=append(fi.FilesList[:fk],fi.FilesList[fk+1:]...)
 				}
 			}
 		}
@@ -54,7 +54,7 @@ func (fi *files) GetFilterSuffix(suffix ...string) *files {
 func (fi *files) GetFilterZH() *files {
 	for k, v := range fi.FilesList {
 		if isChineseChar(v) {
-			fi.FilesList=append(fi.FilesList[:k],fi.FilesList[k:]...)
+			fi.FilesList=append(fi.FilesList[:k],fi.FilesList[k+1:]...)
 			
 		}
 	}
