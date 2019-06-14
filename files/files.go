@@ -1,6 +1,6 @@
 package files
 
-import "utils/file/util"
+import "utils/files/util"
 
 //NewGetFiles get files
 func New() *util.File {
