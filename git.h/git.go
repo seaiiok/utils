@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"os/exec"
+
 	"github.com/seaiiok/utils/fmtx"
 )
 
@@ -18,6 +19,8 @@ func main() {
 		if input.Text() == "push" {
 			fmtx.Println(fmtx.Ok, "push code...")
 			GitPush()
+		} else {
+			os.Exit(0)
 		}
 
 	}
