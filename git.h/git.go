@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"os/exec"
-	"utils/fmtx"
+	"github.com/seaiiok/utils/fmtx"
 )
 
 func main() {
