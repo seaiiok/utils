@@ -56,14 +56,16 @@ func (fi *files) GetFilterSuffix(suffix ...string) *files {
 	return fi
 }
 
-func (fi *files) GetFilterReg(r string) *files {
+func (fi *files) GetFilterReg(r ...string) *files {
 	i := 0
 	for k, v := range fi.FilesList {
-		reg := regexp.MustCompile(r)
-		if reg.MatchString(v) {
-			fi.FilesList[i] = fi.FilesList[k]
-			i++
-			continue
+		for _, rv := range r {
+			reg := regexp.MustCompile(rv)
+			if reg.MatchString(v) {
+				fi.FilesList[i] = fi.FilesList[k]
+				i++
+				continue
+			}
 		}
 	}
 	fi.FilesList = fi.FilesList[:i]

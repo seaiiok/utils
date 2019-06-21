@@ -16,11 +16,11 @@ const (
 	Info
 )
 
-func Println(i int, s string) (int, error) {
+func Println(i int, a ...interface{}) (int, error) {
 	kernel32 := syscall.NewLazyDLL("kernel32.dll")
 	proc := kernel32.NewProc("SetConsoleTextAttribute")
 	handle, _, _ := proc.Call(uintptr(syscall.Stdout), uintptr(i))
-	n, err := fmt.Println(s)
+	n, err := fmt.Println(a...)
 	handle, _, _ = proc.Call(uintptr(syscall.Stdout), uintptr(7))
 	CloseHandle := kernel32.NewProc("CloseHandle")
 	CloseHandle.Call(handle)
