@@ -5,9 +5,9 @@ import (
 	"os/exec"
 )
 
-type git struct {}
+type cmd struct{}
 
-func (g *git) ExecCommand(name string, arg ...string) (output string) {
+func (g *cmd) ExecCommand(name string, arg ...string) (output string) {
 	cmd := exec.Command(name, arg...)
 	stdout, err := cmd.StdoutPipe()
 	if err != nil {
