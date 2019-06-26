@@ -94,6 +94,7 @@ func (g *Git) GitLoopHelp() {
 			output = ii.Cmd.ExecCommand("git", "push", g.repAlias, "master")
 			ii.Print.Println(8, output)
 
+			//更新本地代码库
 			output = ii.Cmd.ExecCommand("gopm", "get", "-u", g.meGithub)
 			ii.Print.Println(8, output)
 
