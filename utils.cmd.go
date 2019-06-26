@@ -8,12 +8,12 @@ import (
 	"syscall"
 )
 
-type cmd struct {
-	_os os
+type _cmd struct {
+	_os _os
 }
 
 //控制台执行命令
-func (g *cmd) ExecCommand(name string, arg ...string) (output string) {
+func (g *_cmd) ExecCommand(name string, arg ...string) (output string) {
 	cmd := exec.Command(name, arg...)
 	stdout, err := cmd.StdoutPipe()
 	if err != nil {
@@ -36,7 +36,7 @@ func (g *cmd) ExecCommand(name string, arg ...string) (output string) {
 }
 
 //终端输出,增加颜色参数，类似fmt.Println
-func (c *cmd) Println(color int, a ...interface{}) (n int, err error) {
+func (c *_cmd) Println(color int, a ...interface{}) (n int, err error) {
 	if c._os.IsWindows() {
 		kernel32 := syscall.NewLazyDLL("kernel32.dll")
 		proc := kernel32.NewProc("SetConsoleTextAttribute")
@@ -55,7 +55,7 @@ func (c *cmd) Println(color int, a ...interface{}) (n int, err error) {
 }
 
 //终端格式输出,增加颜色参数，类似fmt.Printf
-func (c *cmd) Printf(color int, format string, a ...interface{}) (n int, err error) {
+func (c *_cmd) Printf(color int, format string, a ...interface{}) (n int, err error) {
 	if c._os.IsWindows() {
 		kernel32 := syscall.NewLazyDLL("kernel32.dll")
 		proc := kernel32.NewProc("SetConsoleTextAttribute")

@@ -4,11 +4,11 @@ import (
 	"runtime"
 )
 
-type os struct {
+type _os struct {
 }
 
 //判断目标是否为微软Windows系统
-func (o *os) IsWindows() bool {
+func (o *_os) IsWindows() bool {
 	if runtime.GOOS == "windows" {
 		return true
 	}
@@ -16,6 +16,6 @@ func (o *os) IsWindows() bool {
 }
 
 //查看目标操作系统
-func (o *os) OsName() string {
+func (o *_os) OsName() string {
 	return runtime.GOOS
 }

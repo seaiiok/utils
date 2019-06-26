@@ -11,6 +11,6 @@ import (
 )
 
 func main() {
-	ii := &utils.Utils{}
+	ii := utils.New()
 	// ii.Xxx.Xxx
 }
