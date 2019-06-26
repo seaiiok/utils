@@ -1,4 +1,4 @@
-package fmtx
+package utils
 
 import (
 	"fmt"
@@ -6,19 +6,18 @@ import (
 	"syscall"
 )
 
-const (
-	//蓝色
-	Ok = 2 * (iota + 1)
-	//红色
-	Err
-	//黄色
-	Warn
-	//灰色
-	Info
-)
+/**
+* e.g
+* 蓝色 1
+* 红色 3
+* 黄色 5
+* 灰色 7
+**/
 
-func Println(i int, a ...interface{}) (int, error) {
-	if IsWindows() {
+type print struct{}
+
+func (p *print) Println(i int, a ...interface{}) (int, error) {
+	if p.IsWindows() {
 		kernel32 := syscall.NewLazyDLL("kernel32.dll")
 		proc := kernel32.NewProc("SetConsoleTextAttribute")
 		handle, _, _ := proc.Call(uintptr(syscall.Stdout), uintptr(i))
@@ -33,8 +32,8 @@ func Println(i int, a ...interface{}) (int, error) {
 
 }
 
-func Printf(i int, format string, a ...interface{}) (int, error) {
-	if IsWindows() {
+func (p *print) Printf(i int, format string, a ...interface{}) (int, error) {
+	if p.IsWindows() {
 		kernel32 := syscall.NewLazyDLL("kernel32.dll")
 		proc := kernel32.NewProc("SetConsoleTextAttribute")
 		handle, _, _ := proc.Call(uintptr(syscall.Stdout), uintptr(i))
@@ -49,7 +48,7 @@ func Printf(i int, format string, a ...interface{}) (int, error) {
 
 }
 
-func IsWindows() bool {
+func (p *print) IsWindows() bool {
 	if runtime.GOOS == "windows" {
 		return true
 	} else {
