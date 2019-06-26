@@ -3,9 +3,12 @@ package main
 import (
 	"bufio"
 	"os"
+	"strings"
 	"utils"
 )
 
+//自己的github信息
+//先配置好自己的git ssh 公钥
 const (
 	meGithub  = "github.com/seaiiok/utils"
 	repAlias  = "origin"
@@ -31,25 +34,45 @@ func main() {
 		userEmail: userEmail,
 		remoteRep: remoteRep,
 	}
+	// 执行git帮助
 	git.GitLoopHelp()
 }
 
-//GitLoopHelp Git帮助
+// GitLoopHelp 执行git相关命令
+// git add -A
+// git commit -m ""
+// git push remoteRep master
+// 如需pull,请手动
 func (g *Git) GitLoopHelp() {
 
 	ii := new(utils.Utils)
 
+	//避免控制台显示乱码，临时采用UTF-8
 	ii.Cmd.ExecCommand("chcp", "65001")
 
+	//主机
+	host, err := os.Hostname()
+	if err != nil {
+		host = "administrator"
+	}
+	host=strings.ToLower(host)
+
+	//配置git
+	//首次使用手动 git init
 	ii.Cmd.ExecCommand("git", "config", "--global", "user.name", g.userName)
 	ii.Cmd.ExecCommand("git", "config", "--global", "user.email", g.userEmail)
 	ii.Cmd.ExecCommand("git", "remote", "add", g.repAlias, g.remoteRep)
 
+	//循环任务
+	//当前仅支持命令:
+	//push  推送任务
+	//exit  退出git帮助
 	for {
 		ii.Print.Println(1, "cmd help input push...")
 		input := bufio.NewScanner(os.Stdin)
 		input.Scan()
-		if input.Text() == "push" {
+
+		if strings.ToLower(strings.TrimSpace(input.Text())) == "push" {
 			ii.Print.Println(1, "push code...")
 
 			output := ii.Cmd.ExecCommand("git", "add", "-A")
@@ -60,7 +83,7 @@ func (g *Git) GitLoopHelp() {
 			input.Scan()
 
 			if input.Text() == "" {
-				output = ii.Cmd.ExecCommand("git", "commit", "-m", "update...")
+				output = ii.Cmd.ExecCommand("git", "commit", "-m", "update by"+host)
 			} else {
 				output = ii.Cmd.ExecCommand("git", "commit", "-m", input.Text())
 			}
@@ -76,7 +99,7 @@ func (g *Git) GitLoopHelp() {
 			output = ii.Cmd.ExecCommand("gopm", "get", "-g", g.meGithub)
 			ii.Print.Println(7, output)
 
-		} else {
+		} else if strings.ToLower(strings.TrimSpace(input.Text())) == "exit" {
 			os.Exit(0)
 		}
 	}
