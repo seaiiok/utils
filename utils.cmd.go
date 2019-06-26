@@ -5,11 +5,7 @@ import (
 	"os/exec"
 )
 
-type git struct {
-	UserName  string
-	UserEmail string
-	RemoteRep string
-}
+type git struct {}
 
 func (g *git) ExecCommand(name string, arg ...string) (output string) {
 	cmd := exec.Command(name, arg...)
