@@ -55,7 +55,7 @@ func (g *Git) GitLoopHelp() {
 	if err != nil {
 		host = "administrator"
 	}
-	host=strings.ToLower(host)
+	host = strings.ToLower(host)
 
 	//配置git
 	//首次使用手动 git init
@@ -67,37 +67,38 @@ func (g *Git) GitLoopHelp() {
 	//当前仅支持命令:
 	//push  推送任务
 	//exit  退出git帮助
+	ii.Print.Println(13, "start git help...")
 	for {
-		ii.Print.Println(1, "cmd help input push...")
+		ii.Print.Println(11, "cmd help input -push...")
 		input := bufio.NewScanner(os.Stdin)
 		input.Scan()
 
 		if strings.ToLower(strings.TrimSpace(input.Text())) == "push" {
-			ii.Print.Println(1, "push code...")
+			ii.Print.Println(11, "push code...")
 
 			output := ii.Cmd.ExecCommand("git", "add", "-A")
-			ii.Print.Println(7, output)
+			ii.Print.Println(8, output)
 
-			ii.Print.Println(1, "please input comments...")
+			ii.Print.Println(11, "please input comments...")
 			input := bufio.NewScanner(os.Stdin)
 			input.Scan()
 
 			if input.Text() == "" {
-				output = ii.Cmd.ExecCommand("git", "commit", "-m", "update by"+host)
+				output = ii.Cmd.ExecCommand("git", "commit", "-m", "update by "+host)
 			} else {
-				output = ii.Cmd.ExecCommand("git", "commit", "-m", input.Text())
+				output = ii.Cmd.ExecCommand("git", "commit", "-m", strings.ToLower(strings.TrimSpace(input.Text())))
 			}
 
-			ii.Print.Println(7, output)
+			ii.Print.Println(8, output)
 
 			output = ii.Cmd.ExecCommand("git", "push", g.repAlias, "master")
-			ii.Print.Println(7, output)
+			ii.Print.Println(8, output)
 
 			output = ii.Cmd.ExecCommand("gopm", "get", "-u", g.meGithub)
-			ii.Print.Println(7, output)
+			ii.Print.Println(8, output)
 
 			output = ii.Cmd.ExecCommand("gopm", "get", "-g", g.meGithub)
-			ii.Print.Println(7, output)
+			ii.Print.Println(8, output)
 
 		} else if strings.ToLower(strings.TrimSpace(input.Text())) == "exit" {
 			os.Exit(0)

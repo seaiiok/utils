@@ -7,13 +7,12 @@ import (
 )
 
 /**
-* e.g
+* 常用颜色
 * 蓝色 1
 * 红色 3
 * 黄色 5
 * 灰色 7
 **/
-
 type print struct{}
 
 func (p *print) Println(i int, a ...interface{}) (int, error) {
